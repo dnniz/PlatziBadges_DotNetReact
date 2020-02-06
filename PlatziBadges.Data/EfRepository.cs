@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlatziBadges.Entity;
 using System;
-using System.Data.Entity.Validation;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlatziBadges.Data
 {
@@ -20,27 +22,13 @@ namespace PlatziBadges.Data
 
         public void Delete(T entity)
         {
-            try
-            {
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
 
-                this.Entities.Remove(entity);
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
-                this._context.SaveChangesAsync();
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                var msg = string.Empty;
-
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                        msg += Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-
-                var fail = new Exception(msg, dbEx);
-
-                throw fail;
-            }
+            this.Entities.Remove(entity);
+            this._context.SaveChangesAsync();
+        
         }
 
         public ValueTask<T> GetById(object id)
@@ -50,48 +38,21 @@ namespace PlatziBadges.Data
 
         public void Insert(T entity)
         {
-            try
-            {
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
-                this.Entities.Add(entity);
-
-                this._context.SaveChangesAsync();
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                var msg = string.Empty;
-
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                        msg += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
-
-                throw new Exception(msg, dbEx);
-            }
+            this.Entities.Add(entity);
+            this._context.SaveChangesAsync();
         }
 
         public void Update(T entity)
         {
-            try
-            {
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
+            
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
-                this._context.SaveChangesAsync();
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                var msg = string.Empty;
-
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                        msg += Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-
-                var fail = new Exception(msg, dbEx);
-
-                throw fail;
-            }
+            this._context.SaveChangesAsync();
+            
         }
 
         protected virtual DbSet<T> Entities
@@ -103,5 +64,8 @@ namespace PlatziBadges.Data
                 return _entities;
             }
         }
+
+        
+        
     }
 }

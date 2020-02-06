@@ -1,4 +1,8 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PlatziBadges.Entity;
 
@@ -10,15 +14,11 @@ namespace PlatziBadges.Data
         {
 
         }
-        //public PlatziBadgesContext()
-        //    : base("DefaultConnectionString")
-        //{
 
-        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Badge>();
-            //optionsBuilder
+
             base.OnModelCreating(modelBuilder);
         }
         public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity

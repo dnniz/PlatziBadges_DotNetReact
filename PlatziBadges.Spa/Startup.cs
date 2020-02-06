@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlatziBadges.Data;
-using PlatziBadges.Service;
 
 namespace PlatziBadges.Spa
 {
@@ -26,24 +25,16 @@ namespace PlatziBadges.Spa
 
             services.AddControllersWithViews();
 
+            services.AddDbContext<PlatziBadgesContext>(
+                options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"))
+            );
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-            services.AddScoped<IBadgeService, BadgeService>();
-            //services.AddMvc();
-
-            services.AddEntityFrameworkSqlServer()
-                .AddDbContext<PlatziBadgesContext>(
-                options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"))
-            );
-            //string cnn = ConfigurationExtensions.GetConnectionString(this.Configuration, "DefaultConnectionString");
-            //services.AddDbContext<PlatziBadgesContext>(
-            //    options => options.UseSqlServer(cnn)
-            //);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

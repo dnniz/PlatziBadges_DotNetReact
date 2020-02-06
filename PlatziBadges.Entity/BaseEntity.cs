@@ -17,6 +17,6 @@ namespace PlatziBadges.Entity
         public string ModificadoPor { get; set; }
         public DateTime? FechaModificacion { get; set; }
 
-        public BaseEntity() => (FlagActivo,FlagEliminado,FechaCreacion) = (true, false, DateTime.Now);
+        public BaseEntity() => (FlagActivo, FlagEliminado, FechaCreacion) = (true, false, DateTime.Now);
     }
 }
