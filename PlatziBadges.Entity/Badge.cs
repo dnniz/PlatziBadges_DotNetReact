@@ -7,6 +7,8 @@ namespace PlatziBadges.Entity
     [Table("Badge")]
     public class Badge : BaseEntity
     {
+        [Key]
+        public int BadgeId { get; set; }
         [MaxLength(50)]
         public string FirstName { get; set; }
         [MaxLength(50)]

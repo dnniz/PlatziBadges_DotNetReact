@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlatziBadges.Data;
 
 namespace PlatziBadges.Data.Migrations
 {
     [DbContext(typeof(PlatziBadgesContext))]
-    partial class PlatziBadgesContextModelSnapshot : ModelSnapshot
+    [Migration("20200206181820_UpdateColumnBadge")]
+    partial class UpdateColumnBadge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

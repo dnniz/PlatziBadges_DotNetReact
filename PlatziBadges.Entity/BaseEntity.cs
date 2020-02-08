@@ -7,7 +7,6 @@ namespace PlatziBadges.Entity
 {
     public class BaseEntity
     {
-        public int Id { get; set; }
         public bool FlagActivo { get; set; }
         public bool FlagEliminado { get; set; }
         [MaxLength(120)]

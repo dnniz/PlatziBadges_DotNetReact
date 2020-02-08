@@ -14,44 +14,49 @@ namespace PlatziBadges.Data
         private readonly DbContext _context;
         private DbSet<T> _entities;
 
-        public EfRepository(DbContext context)
-        {
-            this._context = context;
-        }
-        public IQueryable<T> Table => throw new NotImplementedException();
+        public EfRepository(DbContext context) => _context = context;
 
-        public void Delete(T entity)
+        public IQueryable<T> Table
+        {
+            get
+            {
+                return this.Entities;
+            }
+        }
+
+        public async void Delete(T entity)
         {
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            this.Entities.Remove(entity);
-            this._context.SaveChangesAsync();
+            Entities.Remove(entity);
+            await _context.SaveChangesAsync();
         
         }
 
-        public ValueTask<T> GetById(object id)
+        public async ValueTask<T> GetById(object id)
         {
-            return this.Entities.FindAsync(id);
+            return await Entities.FindAsync(id);
         }
 
-        public void Insert(T entity)
+        public async ValueTask<int> Insert(T entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            this.Entities.Add(entity);
-            this._context.SaveChangesAsync();
+            Entities.Add(entity);
+            
+            return await _context.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async void Update(T entity)
         {
             
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            this._context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             
         }
 

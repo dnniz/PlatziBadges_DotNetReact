@@ -1,15 +1,31 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlatziBadges.Data;
+using PlatziBadges.Service;
 
 namespace PlatziBadges.Spa
 {
+    /// <summary>
+    /// _ _ _ _ _ _ _ _ _ _ _ 
+    /// # Migración Inicial #
+    /// ---------------------
+    /// 
+    /// Add-Migration InitialCreate
+    /// 
+    /// _ _ _ _ _ _ _ _ _ _ _ _ _ 
+    /// # Crear la base de datos #
+    /// --------------------------
+    /// 
+    /// Update-Database
+    /// 
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -22,19 +38,37 @@ namespace PlatziBadges.Spa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllersWithViews();
+            services.AddControllers();
+            //services.AddControllersWithViews();
 
             services.AddDbContext<PlatziBadgesContext>(
                 options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"))
             );
 
+            services.AddScoped<IBadgeService, BadgeService>();
+
+            #region CORS
+            //Configuración de Politica [personalizada]
+            services.AddCors(options => options.AddPolicy("CORSReactPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            //Configuración de Politica [permitir todo]
+            //services.AddCors();
+            #endregion
+
+
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,8 +88,16 @@ namespace PlatziBadges.Spa
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
             app.UseRouting();
+
+            #region CORS
+            //Configuración de Politica [personalizada]
+            app.UseCors("CORSReactPolicy");
+
+            //Configuración de Politica [permitir todo]
+            //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            #endregion
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -70,7 +112,7 @@ namespace PlatziBadges.Spa
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
                 }
             });
         }
