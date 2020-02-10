@@ -24,18 +24,38 @@ namespace PlatziBadges.Spa.Controllers
 
 
         [HttpPost]
-        [EnableCors]
         public async Task<IActionResult> Post([FromBody] Badge badge)
         {
-            var result = await _badgeService.Add(badge);
+            var result = await _badgeService.AddAsync(badge);
             return Ok(result);
         }
 
         [HttpGet]
-        [EnableCors]
         public async Task<IActionResult> Get()
         {
-            var result =  await _badgeService.GetAll();
+            var result =  await _badgeService.GetAllAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("{badgeId}")]
+        public async Task<IActionResult> Get(int badgeId)
+        {
+            var result = await _badgeService.GetByIdAsync(badgeId);
+            return Ok(result);
+        }
+
+        [HttpPut("{badgeId}")]
+        public async Task<IActionResult> Put(int badgeId, [FromBody] Badge update)
+        {
+            update.BadgeId = badgeId;
+            var result = await _badgeService.UpdateAsync(update);
+            return Ok(result);
+        }
+
+        [HttpDelete("{badgeId}")]
+        public async Task<IActionResult> Delete(int badgeId)
+        {
+            var result = await _badgeService.DeleteAsync(badgeId);
             return Ok(result);
         }
     }

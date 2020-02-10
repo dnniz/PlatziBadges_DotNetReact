@@ -9,10 +9,10 @@ namespace PlatziBadges.Data
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        ValueTask<T> GetById(object id);
-        ValueTask<int> Insert(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        ValueTask<T> GetByIdAsync(object id);
+        ValueTask<int> InsertAsync(T entity);
+        ValueTask<int> UpdateAsync(T entity);
+        ValueTask<int> DeleteAsync(T entity);
         IQueryable<T> Table { get; }
     }
 }

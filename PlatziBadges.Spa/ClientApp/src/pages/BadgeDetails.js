@@ -42,7 +42,7 @@ function BadgeDetails(props) {
               <div>
                 <Link
                   className="btn btn-primary mb-4"
-                  to={`/badges/${props.badge.id}/edit`}
+                  to={`/badges/${props.badge.badgeId}/edit`}
                 >
                   Edit
                 </Link>

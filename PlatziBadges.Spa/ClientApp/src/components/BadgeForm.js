@@ -10,9 +10,9 @@ class BadgeForm extends React.Component {
     });
   };
 
-  handleClick = () => {
-    console.log("Button was click");
-  };
+  // handleClick = () => {
+  //   console.log("Button was click");
+  // };
 
   render() {
     return (
@@ -72,7 +72,10 @@ class BadgeForm extends React.Component {
             {/* <Link className="btn btn-secondary" to="/Badges">
               List Badges
             </Link> */}
-            <button onClick={this.handleClick} className="btn btn-primary">
+            <button
+              // onClick={this.handleClick}
+              className="btn btn-primary"
+            >
               Save
             </button>
           </div>

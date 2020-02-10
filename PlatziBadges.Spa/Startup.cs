@@ -39,7 +39,6 @@ namespace PlatziBadges.Spa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddControllersWithViews();
 
             services.AddDbContext<PlatziBadgesContext>(
                 options =>

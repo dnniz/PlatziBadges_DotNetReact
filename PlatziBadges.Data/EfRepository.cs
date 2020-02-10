@@ -24,23 +24,23 @@ namespace PlatziBadges.Data
             }
         }
 
-        public async void Delete(T entity)
+        public async ValueTask<int> DeleteAsync(T entity)
         {
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
             Entities.Remove(entity);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         
         }
 
-        public async ValueTask<T> GetById(object id)
+        public async ValueTask<T> GetByIdAsync(object id)
         {
             return await Entities.FindAsync(id);
         }
 
-        public async ValueTask<int> Insert(T entity)
+        public async ValueTask<int> InsertAsync(T entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -50,13 +50,15 @@ namespace PlatziBadges.Data
             return await _context.SaveChangesAsync();
         }
 
-        public async void Update(T entity)
+        public async ValueTask<int> UpdateAsync(T entity)
         {
             
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            await _context.SaveChangesAsync();
+            Entities.Update(entity);
+
+            return await _context.SaveChangesAsync();
             
         }
 

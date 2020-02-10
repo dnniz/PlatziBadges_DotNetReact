@@ -1,4 +1,5 @@
-const BASE_URL = "../../api";
+//const BASE_URL = "../../api";
+const BASE_URL = "https://localhost:44338/api";
 
 async function callApi(endpoint, options = {}) {
   options.headers = {
@@ -16,6 +17,7 @@ async function callApi(endpoint, options = {}) {
 const api = {
   badges: {
     list() {
+      console.log("BASE_URL: " + BASE_URL);
       return callApi("/badges");
     },
     create(badge) {
@@ -27,10 +29,10 @@ const api = {
     read(badgeId) {
       return callApi(`/badges/${badgeId}`);
     },
-    update(badgeId, updates) {
+    update(badgeId, update) {
       return callApi(`/badges/${badgeId}`, {
         method: "PUT",
-        body: JSON.stringify(updates)
+        body: JSON.stringify(update)
       });
     },
     // Lo hubiera llamado `delete`, pero `delete` es un keyword en JavaScript asi que no es buena idea :P

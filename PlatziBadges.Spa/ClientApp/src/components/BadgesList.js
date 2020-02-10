@@ -65,8 +65,8 @@ function BadgeList(props) {
           return (
             <li
               key={i}
-              data-id={badge.id}
-              onClick={() => props.redirectEdit(badge.id)}
+              data-id={badge.badgeId}
+              onClick={() => props.redirectEdit(badge.badgeId)}
               className="BadgesListItem"
             >
               <BadgeListItem badge={badge} />
