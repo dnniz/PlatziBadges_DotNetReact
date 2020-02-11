@@ -15,7 +15,6 @@ namespace PlatziBadges.Spa.Controllers
     [EnableCors("CORSReactPolicy")] //Borrar para [permitir todo]
     [Route("api/[controller]")]
     [ApiController]
-    
     public class BadgesController : ControllerBase
     {
         private readonly IBadgeService _badgeService;

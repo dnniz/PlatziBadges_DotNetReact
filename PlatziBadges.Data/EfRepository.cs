@@ -11,10 +11,10 @@ namespace PlatziBadges.Data
 {
     public class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly DbContext _context;
+        private readonly IDbContext _context;
         private DbSet<T> _entities;
 
-        public EfRepository(DbContext context) => _context = context;
+        public EfRepository(IDbContext context) => _context = context;
 
         public IQueryable<T> Table
         {

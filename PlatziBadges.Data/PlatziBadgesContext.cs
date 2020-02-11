@@ -10,7 +10,8 @@ namespace PlatziBadges.Data
 {
     public class PlatziBadgesContext : DbContext, IDbContext
     {
-        public PlatziBadgesContext(DbContextOptions<PlatziBadgesContext> options) : base(options)
+        public PlatziBadgesContext(DbContextOptions<PlatziBadgesContext> options) 
+            : base(options)
         {
 
         }
@@ -25,6 +26,5 @@ namespace PlatziBadges.Data
         {
             return base.Set<TEntity>();
         }
-
     }
 }
